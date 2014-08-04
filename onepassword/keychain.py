@@ -30,7 +30,7 @@ class Keychain(object):
 			if not match:
 				self.stdout.write("%s\n" % key)
 			else:
-				regex = re.compile(".*"+match+"*.?")
+				regex = re.compile(".*"+match+".*")
 				if (fuzz.ratio(match, key) > 50) or (fuzz.ratio(match, key) > 25 and regex.match(key)):
 					self.stdout.write("%s\n" % key)
 	return
