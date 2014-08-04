@@ -138,7 +138,7 @@ class KeychainItem(object):
         raise Exception("Cannot extract a password from this type of"
                         " keychain item (%s)" % self._type)
 
-   def _find_username(self):
+    def _find_username(self):
 	raise Exception("Cannot extract a username from this type of"
 			" keychain item (%s)" % self._type
 
@@ -165,10 +165,12 @@ class WebFormKeychainItem(KeychainItem):
                field.get("name") == "Password":
                 return field["value"]
 
+    def _find_username(self):
+	for field in self._data["fields"]:
+	    if field.get("designation") == "username" or \
+	       field.get("name") == "username":
+		return field["value"]
 
 class PasswordKeychainItem(KeychainItem):
     def _find_password(self):
         return self._data["password"]
-
-    def _find_username(self):
-	return self._data["username"]
