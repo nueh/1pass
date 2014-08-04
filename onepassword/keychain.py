@@ -35,9 +35,6 @@ class Keychain(object):
 					self.stdout.write("%s\n" % key)
 	return
 
-    def print_match(self, match):
-	return
-
     def item(self, name, fuzzy_threshold=100):
         """
         Extract a password from an unlocked Keychain using fuzzy
