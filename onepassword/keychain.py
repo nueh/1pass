@@ -132,10 +132,15 @@ class KeychainItem(object):
         decrypted_json = key.decrypt(self._encrypted_json)
         self._data = json.loads(decrypted_json)
         self.password = self._find_password()
+	self.username = self._find_username()
 
     def _find_password(self):
         raise Exception("Cannot extract a password from this type of"
                         " keychain item (%s)" % self._type)
+
+   def _find_username(self):
+	raise Exception("Cannot extract a username from this type of"
+			" keychain item (%s)" % self._type
 
     def _lazily_load(self, attr):
         if not hasattr(self, attr):
@@ -164,3 +169,6 @@ class WebFormKeychainItem(KeychainItem):
 class PasswordKeychainItem(KeychainItem):
     def _find_password(self):
         return self._data["password"]
+
+    def _find_username(self):
+	return self._data["username"]
