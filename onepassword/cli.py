@@ -26,6 +26,18 @@ class CLI(object):
         The main entry point, performs the appropriate action for the given
         arguments.
         """
+	if self.arguments.l:
+		self.keychain.print_list()
+		sys.exit()
+
+	if self.arguments.m:
+		self.keychain.print_list(self.arguments.m)
+		sys.exit()
+
+	if not self.arguments.l and not self.arguments.m and self.arguments.item is None:
+		self.stderr.write("1pass: error: too few arguments\n")
+		sys.exit(0)
+
         self._unlock_keychain()
 
         item = self.keychain.item(
@@ -43,7 +55,7 @@ class CLI(object):
 
     def argument_parser(self):
         parser = argparse.ArgumentParser()
-        parser.add_argument("item", help="The name of the password to decrypt")
+        parser.add_argument("item", nargs='?', help="The name of the password to decrypt")
         parser.add_argument(
             "--path",
             default=os.environ.get('ONEPASSWORD_KEYCHAIN', DEFAULT_KEYCHAIN_PATH),
@@ -59,6 +71,16 @@ class CLI(object):
             action="store_true",
             help="Don't prompt for a password, read from STDIN instead",
         )
+	parser.add_argument(
+	    "-l",
+	    action="store_true",
+            help="Print all stored item names",
+	)
+	parser.add_argument(
+	    "-m",
+	    action="store",
+	    help="Print all stored item names matching -m string",
+	)
         return parser
 
     def _unlock_keychain(self):

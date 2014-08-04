@@ -1,6 +1,10 @@
 import json
 import os
+import sys
+import re 
+
 from fuzzywuzzy import process
+from fuzzywuzzy import fuzz
 
 from onepassword.encryption_key import EncryptionKey
 
@@ -11,6 +15,7 @@ class Keychain(object):
         self._load_encryption_keys()
         self._load_item_list()
         self._locked = True
+	self.stdout = sys.stdout
 
     def unlock(self, password):
         unlocker = lambda key: key.unlock(password)
@@ -18,6 +23,20 @@ class Keychain(object):
         result = reduce(lambda x, y: x and y, unlock_results)
         self._locked = not result
         return result
+
+    def print_list(self, match=0):
+	for key, value in self._items.iteritems():
+		if not type(value).__name__ == "KeychainItem":
+			if not match:
+				self.stdout.write("%s\n" % key)
+			else:
+				regex = re.compile(".*"+match+"*.?")
+				if (fuzz.ratio(match, key) > 50) or (fuzz.ratio(match, key) > 25 and regex.match(key)):
+					self.stdout.write("%s\n" % key)
+	return
+
+    def print_match(self, match):
+	return
 
     def item(self, name, fuzzy_threshold=100):
         """
