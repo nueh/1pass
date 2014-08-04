@@ -35,6 +35,7 @@ class CLI(object):
 		sys.exit()
 
 	if not self.arguments.l and not self.arguments.m and self.arguments.item is None:
+		self.argument_parser().print_usage()
 		self.stderr.write("1pass: error: too few arguments\n")
 		sys.exit(0)
 
