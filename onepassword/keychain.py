@@ -140,7 +140,7 @@ class KeychainItem(object):
 
     def _find_username(self):
 	raise Exception("Cannot extract a username from this type of"
-			" keychain item (%s)" % self._type
+			" keychain item (%s)" % self._type)
 
     def _lazily_load(self, attr):
         if not hasattr(self, attr):
