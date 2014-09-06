@@ -132,7 +132,7 @@ class KeychainItem(object):
         decrypted_json = key.decrypt(self._encrypted_json)
         self._data = json.loads(decrypted_json)
         self.password = self._find_password()
-	self.username = self._find_username()
+        self.username = self._find_username()
 
     def _find_password(self):
         raise Exception("Cannot extract a password from this type of"

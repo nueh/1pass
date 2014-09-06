@@ -3,3 +3,6 @@ ENV
 dist
 1pass.egg-info
 build
+*.sublime-workspace
+*.sublime-project
+
