@@ -62,3 +62,7 @@ License
 While it is designed to read ``.agilekeychain`` bundles created by 1Password,
 *1pass* isn't officially sanctioned or supported by
 `AgileBits <https://agilebits.com/>`. I do hope they like it though.
+
+Notes
+=====
+1Password 3.0 era keychain description https://help.agilebits.com/1Password3/agile_keychain_design.html
