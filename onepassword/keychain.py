@@ -103,6 +103,8 @@ class KeychainItem(object):
         name = row[2]
         if type == "webforms.WebForm":
             return WebFormKeychainItem(identifier, name, path, type)
+        elif type == "wallet.computer.License":
+            return SoftwareLicenseKeychainItem(identifier, name, path, type)
         elif type == "passwords.Password" or type == "wallet.onlineservices.GenericAccount":
             return PasswordKeychainItem(identifier, name, path, type)
         else:
@@ -177,3 +179,7 @@ class WebFormKeychainItem(KeychainItem):
 class PasswordKeychainItem(KeychainItem):
     def _find_password(self):
         return self._data["password"]
+        
+class SoftwareLicenseKeychainItem(KeychainItem):
+    def _find_password(self):
+        return self._data["reg_code"]
